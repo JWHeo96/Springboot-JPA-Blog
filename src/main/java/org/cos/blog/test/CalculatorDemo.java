@@ -12,8 +12,8 @@ class Calculator {
         System.out.println(this.left + this.right);
     }
 
-    public int avg() {
-        return ((this.left + this.right) / 2);
+    public void avg() {
+        System.out.println(((this.left + this.right) / 2));
     }
 }
 
@@ -23,8 +23,8 @@ class SubstractionableCalculator extends Calculator {
         System.out.println("실행 결과는 " + (this.left + this.right) + "입니다.");
     }
 
-    public int avg() {
-        return super.avg();
+    public void avg() {
+        super.avg();
     }
 
     public void substract() {
@@ -37,7 +37,7 @@ public class CalculatorDemo {
         SubstractionableCalculator c1 = new SubstractionableCalculator();
         c1.setOprands(10, 20);
         c1.sum();
-        System.out.println("실행 결과는" + c1.avg());
+        c1.avg();
         c1.substract();
     }
 }
