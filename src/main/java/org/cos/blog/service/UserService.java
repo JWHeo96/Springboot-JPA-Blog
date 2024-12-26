@@ -16,14 +16,7 @@ public class UserService {
     private UserRepository userRepository;
 
     @Transactional // 전체 서비스가 하나의 트랜잭션으로 묶이게 됨, 성공시 커밋 실패 시 롤백
-    public int join(User user) {
-        try {
-            return userRepository.save(user).getId();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("UserService : 회원가입() : " + e.getMessage());
-
-            return -1;
-        }
+    public void join(User user) {
+        userRepository.save(user);
     }
 }

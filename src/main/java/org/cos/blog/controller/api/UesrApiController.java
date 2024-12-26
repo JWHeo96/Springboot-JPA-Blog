@@ -23,7 +23,7 @@ public class UesrApiController {
         System.out.println("UserApiController : save 호출됨");
         // 실제로 DB에 insert를 하고 아래에서 return이 되면 된다
         user.setRole(RoleType.USER);
-        int result = userService.join(user);
-        return new ResponseDto<Integer>(HttpStatus.OK, result); // 자바오브젝트를 JSON으로 변환해서 리턴 (Jackson)
+        userService.join(user);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); // 자바오브젝트를 JSON으로 변환해서 리턴 (Jackson)
     }
 }
