@@ -34,4 +34,13 @@ spring:
       fail-on-empty-beans: false
 
 
+  spring:
+    elasticsearch:
+      rest:
+        uris: http://localhost:9200
+    data:
+      elasticsearch:
+        cluster-name: your-cluster-name
+        cluster-nodes: localhost:9200
+
 
