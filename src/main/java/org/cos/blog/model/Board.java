@@ -25,10 +25,11 @@ public class Board {
     @Column(nullable = false, length = 100)
     private String title;
 
-    @Lob // 대용량 데이터
+    //@Lob // 대용량 데이터 : TINYTEXT으로 등록되어 에러남
+    @Column(columnDefinition = "longblob")
     private String content; // 섬머노트 라이브러리 <html>태그가 섞여서 디자인 됨.
 
-    @ColumnDefault("0")
+    //@ColumnDefault("0")
     private int count; // 조회수
 
     // FetchType.EAGER 전략 -> 무조건 조회해와라

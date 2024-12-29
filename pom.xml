@@ -32,10 +32,10 @@
     <dependencies>
         <!-- 추가 라이브러리 시작 -->
         <!-- 시큐리티 태그 라이브러리 -->
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
-        </dependency>-->
+        </dependency>
 
         <!-- JSP 템플릿 엔진 -->
         <dependency>
@@ -44,11 +44,25 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- JSTL -->
+        <!-- Jakarta Servlet API -->
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version> <!-- 적절한 최신 버전으로 교체 -->
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api -->
+        <dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+
+        <!-- JSP 및 JSTL API -->
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <version>3.0.1</version>
         </dependency>
 
         <dependency>
@@ -56,10 +70,11 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>-->
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -91,26 +106,6 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.pdfbox</groupId>
-            <artifactId>pdfbox</artifactId>
-            <version>2.0.31</version>
-        </dependency>
-
-        <!-- Spring Data Elasticsearch dependency -->
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-elasticsearch</artifactId>
-            <version>5.0.1</version>
-        </dependency>
-
-        <!-- Elasticsearch dependency -->
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>elasticsearch-rest-high-level-client</artifactId>
-            <version>7.10.1</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -123,7 +118,7 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.18.28</version> <!-- lombok 버전을 추가 -->
+                            <version>1.18.30</version> <!-- lombok 버전을 추가 -->
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
