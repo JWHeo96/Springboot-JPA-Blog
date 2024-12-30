@@ -20,4 +20,4 @@
 </div>
 <script type="text/javascript" src="/js/user.js"></script>
 
-<jsp:include page="../layout/footer.jsp"/>
+<jsp:include page="../layout/footer.jsp"/>f
