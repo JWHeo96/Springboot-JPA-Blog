@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +23,10 @@ public class BoardController {
     // @AuthenticationPrincipal PrincipalDetail principal 컨트롤러에서 세션을 어떻게 찾는지?
     public String index(Model model,
                         @PageableDefault(size=3, sort="id", direction= Sort.Direction.DESC) Pageable pageable) {
+
         model.addAttribute("boards", boardService.getBoardList(pageable));
         // WEB-INF/views/index.jsp
+        System.out.println("BoardController ==> index() ==> " + SecurityContextHolder.getContext().getAuthentication());
         return "index";
     }
 

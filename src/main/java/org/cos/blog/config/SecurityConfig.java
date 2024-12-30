@@ -1,6 +1,7 @@
 package org.cos.blog.config;
 
 import jakarta.servlet.DispatcherType;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.cos.blog.auth.PrincipalDetail;
 import org.cos.blog.auth.PrincipalDetailService;
@@ -15,8 +16,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.net.http.HttpRequest;
 
 // 빈 등록 : 스프링 컨테이너에서 객체를 관리할 수 있게 하는 것
 @Configuration // 빈등록(IoC)
@@ -59,7 +63,9 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/"))
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/auth/loginForm"));
+                        .logoutSuccessUrl("/auth/loginForm"))
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
 
         return http.build();
     }

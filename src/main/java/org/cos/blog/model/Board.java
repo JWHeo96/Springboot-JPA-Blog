@@ -1,5 +1,6 @@
 package org.cos.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,9 +41,11 @@ public class Board {
     // mappedBy 연관관계의 주인이 아니다 (난 FK가 아니다) -> DB에 컬럼을 만들지 말 것. -> 단순히 board를 select할때 join문을 통해 값을 얻기 위함이다.
     // mappedBy = "" <- Reply 클래스에 있는 Field 이름 Board 'board'
     // FetchType.LAZY 전략 -> 없으면 들고오지 마라 -> 게시글 상세보기에 '댓글 펼치기'가 있는 경우
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER) // 하나의 게시글은 여러개의 답변을 가질 수 있다.
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE) // 하나의 게시글은 여러개의 답변을 가질 수 있다.
     //@JoinColumn(name="replyId") 외래키가 필요 없다. 하나의 게시판 데이터에 여러개의 답변 id가 들어가면 안됨
-    private List<Reply> reply;
+    @JsonIgnoreProperties({"board"}) // Json으로 파싱하지 않는다. (무한참조 방지)
+    @OrderBy("id desc")
+    private List<Reply> replys;
 
     @CreationTimestamp
     private Timestamp createDate;

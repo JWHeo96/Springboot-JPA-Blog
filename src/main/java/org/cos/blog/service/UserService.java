@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,12 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
+    @Transactional(readOnly = true)
+    public User findUser(String username) {
+        return userRepository.findByUsername(username)
+                .orElseGet(() -> {return new User();});
+    }
+
     @Transactional // 전체 서비스가 하나의 트랜잭션으로 묶이게 됨, 성공시 커밋 실패 시 롤백
     public void join(User user) {
         String rawPassword = user.getPassword(); // 1234 원문
@@ -40,8 +47,12 @@ public class UserService {
         // 수정시에는 영속성 컨텍스트 User 오브젝트를 영속화시키고, 영속화된 User 오브젝트를 수정
         User user = userRepository.findById(reqUser.getId())
                 .orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다."));
-        user.setPassword(encoder.encode(reqUser.getPassword()));
-        user.setEmail(reqUser.getEmail());
+        
+        // Validation 체크 => oauth에 필드 값이 없으면 수정 불가
+        if (user.getOauth() == null || user.getOauth().equals("")) {
+            user.setPassword(encoder.encode(reqUser.getPassword()));
+            user.setEmail(reqUser.getEmail());   
+        }
 
         // 회운수정 함수 종료시 = 서비스 종료 = 트랜잭션 종료 = commit이 자동으로 된다.
         // 영속화된 persistance 객체의 변화가 감지되면 더티체킹이 되어 update문을 날려줌.
